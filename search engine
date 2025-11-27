@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   
+
+struct animal {
+    char ani_species[15];
+    int ani_age;
+    char ani_nutrition[15];
+};
+
+int main() {
+    struct animal ani[50], temp;
+    int i, j, c, n, flag;
+    char s[15];   
+
+    n = 0;       
+    while (1) {   
+
+        printf("\nMenu:\n1.Add record\n2.Display record\n3.Sort\n4.Search\n5.Exit\nEnter your Choice:");
+        scanf("%d", &c);
+
+        switch (c) {
+
+        case 1:
+            printf("Enter number of animals to add?: ");
+            scanf("%d", &n);
+            for (i = 0; i < n; i++) {
+                printf("\nEnter species of animal %d: ", i + 1);
+                scanf("%s", ani[i].ani_species);
+
+                printf("Enter age of animal: ");
+                scanf("%d", &ani[i].ani_age);
+
+                printf("Enter nutrition of animal: ");
+                scanf("%s", ani[i].ani_nutrition);
+            }
+            break;
+
+        case 2:
+                       if (n == 0) {
+                printf("\nNo records to display.\n");
+            } else {
+                printf("\n--- Animal Records ---\n");
+                for (i = 0; i < n; i++) {
+                    printf("\nRecord %d:\n", i + 1);
+                    printf("Species: %s\n", ani[i].ani_species);
+                    printf("Age: %d\n", ani[i].ani_age);
+                    printf("Nutrition: %s\n", ani[i].ani_nutrition);
+                }
+            }
+            break;
+
+        case 3:
+
+                       for (i = 0; i < n - 1; i++) {
+                for (j = 0; j < n - i - 1; j++) {
+                    if (ani[j].ani_age > ani[j + 1].ani_age) {
+                        temp = ani[j];
+                        ani[j] = ani[j + 1];
+                        ani[j + 1] = temp;
+                    }
+                }
+            }
+
+            printf("\n--- Animal Details Sorted by Age (Ascending) ---\n");
+            for (i = 0; i < n; i++) {
+                printf("\nSpecies: %s", ani[i].ani_species);
+                printf("\nAge: %d", ani[i].ani_age);
+                printf("\nNutrition: %s\n", ani[i].ani_nutrition);
+            }
+            break;
+
+        case 4:
+            printf("\nEnter species name to search: ");
+            scanf("%s", s);
+
+            flag = 0;
+            for (i = 0; i < n; i++) {
+
+                              if (strcmp(ani[i].ani_species, s) == 0) {
+                    printf("\nRecord Found!\n");
+                    printf("Species: %s\n", ani[i].ani_species);
+                    printf("Age: %d\n", ani[i].ani_age);
+                    printf("Nutrition: %s\n", ani[i].ani_nutrition);
+                    flag = 1;
+                }
+            }
+
+            if (flag == 0) {
+                printf("\nSorry, species '%s' not found!\n", s); // print s, not n
+            }
+            break;
+
+        case 5:
+            printf("\nExiting...\n");
+            exit(0);
+
+        default:
+            printf("\nInvalid choice!\n");
+        }
+    }
+
+    return 0;
+}
+
